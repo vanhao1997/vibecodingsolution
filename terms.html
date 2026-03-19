@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Điều khoản sử dụng — VibeCodingSolution</title>
+    <meta name="description"
+        content="Điều khoản sử dụng của VibeCodingSolution — quy định về việc sử dụng dịch vụ và nghĩa vụ người dùng.">
+    <link rel="icon" type="image/jpeg" href="/logo.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+            --bg-primary: #050505;
+            --surface: rgba(18, 18, 18, 0.7);
+            --surface-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f0f0f0;
+            --text-secondary: rgba(240, 240, 240, 0.55);
+            --text-tertiary: rgba(240, 240, 240, 0.3);
+            --accent: #10b981;
+            --accent-muted: rgba(16, 185, 129, 0.15);
+            --accent-border: rgba(16, 185, 129, 0.3);
+            --sidebar-w: 240px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Grain */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 180px;
+        }
+
+        /* ===== TWO-COLUMN LAYOUT ===== */
+        .page-layout {
+            display: flex;
+            max-width: 1100px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        /* ----- SIDEBAR ----- */
+        .sidebar {
+            width: var(--sidebar-w);
+            flex-shrink: 0;
+            padding: 36px 0 40px 28px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            scrollbar-width: none;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 28px;
+            font-size: 0.72rem;
+            font-family: var(--font-mono);
+            font-weight: 500;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            padding: 5px 12px;
+            border-radius: 16px;
+            border: 1px solid var(--accent-border);
+            background: var(--accent-muted);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            width: fit-content;
+        }
+
+        .back:hover {
+            transform: translateY(-1px);
+            background: rgba(16, 185, 129, 0.2);
+        }
+
+        .back:active {
+            transform: scale(0.97);
+        }
+
+        .back svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .sidebar-label {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            padding-left: 2px;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 2px;
+        }
+
+        .toc-list a {
+            display: block;
+            padding: 6px 12px;
+            font-size: 0.78rem;
+            font-weight: 450;
+            color: var(--text-tertiary);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+            line-height: 1.4;
+        }
+
+        .toc-list a:hover {
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .toc-list a.active {
+            color: var(--accent);
+            background: var(--accent-muted);
+            border-left-color: var(--accent);
+            font-weight: 550;
+        }
+
+        /* ----- MAIN CONTENT ----- */
+        .content {
+            flex: 1;
+            min-width: 0;
+            padding: 48px 40px 80px 48px;
+            border-left: 1px solid var(--surface-border);
+        }
+
+        h1 {
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.03em;
+            margin-bottom: 6px;
+            line-height: 1.15;
+        }
+
+        .update-date {
+            font-family: var(--font-mono);
+            color: var(--text-tertiary);
+            font-size: 0.72rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 48px 0 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--surface-border);
+            letter-spacing: -0.01em;
+            scroll-margin-top: 24px;
+        }
+
+        h2:first-of-type {
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 0.92rem;
+            font-weight: 600;
+            margin: 22px 0 8px;
+            color: var(--text-primary);
+            opacity: 0.85;
+        }
+
+        p {
+            margin-bottom: 14px;
+        }
+
+        ul,
+        ol {
+            margin-bottom: 14px;
+            padding-left: 22px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        strong {
+            color: var(--text-primary);
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-left: 3px solid var(--accent);
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin: 18px 0;
+            font-size: 0.86rem;
+            backdrop-filter: blur(8px);
+        }
+
+        .alert-danger {
+            border-left-color: #ef4444;
+        }
+
+        .contact-card {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 14px;
+            padding: 24px;
+            margin-top: 20px;
+            backdrop-filter: blur(12px);
+        }
+
+        .contact-card p {
+            margin-bottom: 6px;
+        }
+
+        .contact-card .highlight {
+            color: var(--accent);
+            font-weight: 500;
+            margin-top: 10px;
+        }
+
+        .page-footer {
+            margin-top: 48px;
+            padding-top: 18px;
+            border-top: 1px solid var(--surface-border);
+            text-align: center;
+            font-family: var(--font-mono);
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== MOBILE ===== */
+        @media (max-width: 768px) {
+            .page-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: relative;
+                height: auto;
+                width: 100%;
+                padding: 24px 20px 0;
+                border-bottom: 1px solid var(--surface-border);
+            }
+
+            .toc-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+
+            .toc-list a {
+                padding: 4px 10px;
+                font-size: 0.72rem;
+                border-left: none;
+                border-radius: 14px;
+            }
+
+            .toc-list a.active {
+                border-left: none;
+            }
+
+            .content {
+                padding: 32px 20px 60px;
+                border-left: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <a href="/" class="back">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M19 12H5" />
+                    <polyline points="12 19 5 12 12 5" />
+                </svg>
+                Trang chủ
+            </a>
+
+            <div class="sidebar-label">Mục lục</div>
+            <ol class="toc-list">
+                <li><a href="#chap-nhan">Chấp nhận điều khoản</a></li>
+                <li><a href="#dinh-nghia">Định nghĩa</a></li>
+                <li><a href="#tai-khoan">Đăng ký tài khoản</a></li>
+                <li><a href="#nghia-vu">Nghĩa vụ người dùng</a></li>
+                <li><a href="#dich-vu">Mô tả dịch vụ</a></li>
+                <li><a href="#so-huu">Sở hữu trí tuệ</a></li>
+                <li><a href="#cam">Hành vi cấm</a></li>
+                <li><a href="#noi-dung">Chính sách nội dung</a></li>
+                <li><a href="#cham-dut">Chấm dứt dịch vụ</a></li>
+                <li><a href="#tu-choi">Từ chối trách nhiệm</a></li>
+                <li><a href="#lien-he">Liên hệ</a></li>
+            </ol>
+        </aside>
+
+        <!-- CONTENT -->
+        <main class="content">
+            <h1>Điều khoản sử dụng</h1>
+            <p class="update-date">Cập nhật lần cuối: 16/03/2026</p>
+
+            <h2 id="chap-nhan">Chấp nhận điều khoản</h2>
+            <p>Chào mừng bạn đến với VibeCodingSolution. Bằng cách truy cập và sử dụng website, ứng dụng web, hoặc bất
+                kỳ dịch vụ nào do chúng tôi cung cấp (gọi chung là "Dịch vụ"), bạn đồng ý tuân thủ và bị ràng buộc bởi
+                các điều khoản và điều kiện được quy định trong tài liệu này.</p>
+            <h3>Tính ràng buộc pháp lý</h3>
+            <p>Các điều khoản này tạo thành một thỏa thuận ràng buộc pháp lý giữa bạn và VibeCodingSolution. Vui lòng
+                đọc kỹ trước khi sử dụng dịch vụ.</p>
+            <h3>Điều kiện sử dụng</h3>
+            <ul>
+                <li>Bạn phải từ đủ 16 tuổi trở lên để sử dụng dịch vụ</li>
+                <li>Bạn phải cung cấp thông tin chính xác và cập nhật</li>
+                <li>Bạn chịu trách nhiệm về mọi hoạt động trên tài khoản của mình</li>
+            </ul>
+            <h3>Phạm vi áp dụng</h3>
+            <p>Những điều khoản này áp dụng cho tất cả dịch vụ do VibeCodingSolution cung cấp, bao gồm nhưng không giới
+                hạn: AdsFlow, VibeBanner, DataPipe và các sản phẩm phần mềm khác.</p>
+
+            <h2 id="dinh-nghia">Định nghĩa</h2>
+            <h3>Các thuật ngữ chính</h3>
+            <ul>
+                <li><strong>"Chúng tôi" / "VibeCodingSolution":</strong> Đề cập đến VibeCodingSolution và các dịch vụ
+                    liên quan</li>
+                <li><strong>"Bạn" / "Người dùng":</strong> Cá nhân hoặc tổ chức sử dụng dịch vụ của chúng tôi</li>
+                <li><strong>"Dịch vụ":</strong> Tất cả sản phẩm, website, API và công cụ do VibeCodingSolution cung cấp
+                </li>
+                <li><strong>"Nội dung":</strong> Văn bản, hình ảnh, dữ liệu, cấu hình và tài liệu do người dùng tạo ra
+                </li>
+                <li><strong>"Tài khoản":</strong> Đăng ký cá nhân của bạn trên hệ thống</li>
+            </ul>
+            <h3>Dịch vụ cụ thể</h3>
+            <ul>
+                <li><strong>AdsFlow:</strong> Công cụ tự động kéo dữ liệu Facebook Ads vào Google Sheets</li>
+                <li><strong>VibeBanner:</strong> Công cụ tạo banner quảng cáo GDN</li>
+                <li><strong>DataPipe:</strong> Nền tảng kết nối dữ liệu quảng cáo đa kênh</li>
+            </ul>
+
+            <h2 id="tai-khoan">Đăng ký tài khoản</h2>
+            <h3>Quy trình đăng ký</h3>
+            <ul>
+                <li>Đăng nhập qua tài khoản Google (OAuth 2.0)</li>
+                <li>Xác minh email tự động thông qua Google</li>
+                <li>Chấp nhận Điều khoản sử dụng và Chính sách bảo mật</li>
+            </ul>
+            <h3>Trách nhiệm tài khoản</h3>
+            <ul>
+                <li>Bảo mật thông tin đăng nhập Google của bạn</li>
+                <li>Thông báo ngay nếu phát hiện truy cập trái phép</li>
+                <li>Chịu trách nhiệm về mọi hoạt động trên tài khoản</li>
+                <li>Không chia sẻ quyền truy cập với người khác</li>
+            </ul>
+            <h3>Hạn chế tài khoản</h3>
+            <ul>
+                <li>Mỗi người chỉ được tạo một tài khoản</li>
+                <li>Không tạo tài khoản giả mạo hoặc sử dụng thông tin người khác</li>
+                <li>Tài khoản không hoạt động quá 12 tháng có thể bị tự động xoá</li>
+            </ul>
+
+            <h2 id="nghia-vu">Nghĩa vụ người dùng</h2>
+            <h3>Sử dụng hợp pháp</h3>
+            <ul>
+                <li>Tuân thủ pháp luật Việt Nam và pháp luật quốc tế</li>
+                <li>Không sử dụng dịch vụ cho mục đích bất hợp pháp</li>
+                <li>Tôn trọng quyền sở hữu trí tuệ của người khác</li>
+                <li>Tuân thủ điều khoản sử dụng của Facebook, Google</li>
+            </ul>
+            <h3>Tuân thủ kỹ thuật</h3>
+            <ul>
+                <li>Không cố gắng truy cập trái phép vào hệ thống</li>
+                <li>Không can thiệp vào hoạt động bình thường của dịch vụ</li>
+                <li>Không sử dụng bot, scraper hoặc công cụ tự động ngoài API được cung cấp</li>
+                <li>Không cố gắng giải mã, dịch ngược mã nguồn</li>
+            </ul>
+            <div class="alert">
+                <strong>Cam kết người dùng:</strong> Bằng cách sử dụng dịch vụ, bạn cam kết tuân thủ tất cả nghĩa vụ
+                trên và chịu trách nhiệm cho mọi hậu quả phát sinh từ việc vi phạm.
+            </div>
+
+            <h2 id="dich-vu">Mô tả dịch vụ</h2>
+            <h3>Dịch vụ chính</h3>
+            <ul>
+                <li>Kết nối và tự động hoá dữ liệu giữa các nền tảng quảng cáo</li>
+                <li>Thu thập dữ liệu Facebook Ads theo lịch trình tự động</li>
+                <li>Ghi dữ liệu vào Google Sheets theo cấu hình của người dùng</li>
+                <li>Quản lý nhiều tài khoản quảng cáo cùng lúc</li>
+            </ul>
+            <h3>Cam kết chất lượng</h3>
+            <ul>
+                <li>Uptime mục tiêu: 99.5%</li>
+                <li>Hỗ trợ kỹ thuật trong giờ làm việc</li>
+                <li>Cập nhật và bảo trì định kỳ</li>
+            </ul>
+            <h3>Giới hạn dịch vụ</h3>
+            <ul>
+                <li>Dịch vụ phụ thuộc vào API của Facebook và Google — có thể bị ảnh hưởng khi các nền tảng thay đổi API
+                </li>
+                <li>Giới hạn tốc độ API theo chính sách của từng nền tảng</li>
+                <li>Bảo trì định kỳ có thể gây gián đoạn tạm thời (sẽ thông báo trước)</li>
+            </ul>
+
+            <h2 id="so-huu">Sở hữu trí tuệ</h2>
+            <h3>Quyền sở hữu của VibeCodingSolution</h3>
+            <ul>
+                <li>Mã nguồn, thiết kế, giao diện người dùng</li>
+                <li>Logo, thương hiệu, tên miền</li>
+                <li>Thuật toán, quy trình xử lý dữ liệu</li>
+                <li>Tài liệu hướng dẫn và nội dung marketing</li>
+            </ul>
+            <h3>Quyền của người dùng</h3>
+            <ul>
+                <li>Bạn giữ toàn quyền sở hữu dữ liệu của mình</li>
+                <li>Chúng tôi chỉ truy cập dữ liệu để cung cấp dịch vụ</li>
+                <li>Bạn có thể xuất dữ liệu bất cứ lúc nào</li>
+            </ul>
+
+            <h2 id="cam">Hành vi cấm</h2>
+            <ul>
+                <li>Sử dụng dịch vụ cho mục đích gian lận, lừa đảo</li>
+                <li>Tải lên phần mềm độc hại, virus</li>
+                <li>Cố gắng truy cập trái phép vào tài khoản người khác</li>
+                <li>Spam hoặc gửi nội dung không mong muốn</li>
+                <li>Thu thập dữ liệu người dùng khác trái phép</li>
+                <li>Sử dụng dịch vụ vượt quá giới hạn hợp lý</li>
+                <li>Vi phạm chính sách của Facebook, Google</li>
+            </ul>
+            <div class="alert alert-danger">
+                <strong>Biện pháp xử lý:</strong> Vi phạm các hành vi cấm có thể dẫn đến cảnh cáo, tạm khoá, hoặc xoá
+                vĩnh viễn tài khoản mà không cần thông báo trước.
+            </div>
+
+            <h2 id="noi-dung">Chính sách nội dung</h2>
+            <h3>Quyền sở hữu nội dung</h3>
+            <p>Mọi dữ liệu, cấu hình, báo cáo bạn tạo trên dịch vụ của chúng tôi đều thuộc sở hữu của bạn. Chúng tôi
+                không sử dụng nội dung của bạn cho bất kỳ mục đích nào khác ngoài việc cung cấp dịch vụ.</p>
+            <h3>Quyền sử dụng nội dung</h3>
+            <p>Bằng cách tải nội dung lên dịch vụ, bạn cấp cho chúng tôi giấy phép không độc quyền để lưu trữ, xử lý và
+                hiển thị nội dung đó nhằm mục đích cung cấp dịch vụ cho bạn.</p>
+
+            <h2 id="cham-dut">Chấm dứt dịch vụ</h2>
+            <h3>Chấm dứt do người dùng</h3>
+            <ul>
+                <li>Bạn có thể xóa tài khoản bất cứ lúc nào</li>
+                <li>Sau khi xóa, dữ liệu sẽ được giữ lại 30 ngày để phòng trường hợp bạn muốn khôi phục</li>
+                <li>Sau 30 ngày, dữ liệu sẽ bị xóa vĩnh viễn</li>
+            </ul>
+            <h3>Chấm dứt do VibeCodingSolution</h3>
+            <ul>
+                <li>Vi phạm nghiêm trọng các điều khoản sử dụng</li>
+                <li>Hoạt động gian lận hoặc bất hợp pháp</li>
+                <li>Yêu cầu từ cơ quan pháp luật</li>
+                <li>Ngừng cung cấp dịch vụ (thông báo trước 30 ngày)</li>
+            </ul>
+            <h3>Hậu quả chấm dứt</h3>
+            <ul>
+                <li>Mất quyền truy cập vào tất cả dịch vụ</li>
+                <li>Dữ liệu sẽ được xử lý theo Chính sách bảo mật</li>
+                <li>Các kết nối OAuth sẽ bị thu hồi</li>
+            </ul>
+
+            <h2 id="tu-choi">Từ chối trách nhiệm</h2>
+            <h3>Không bảo đảm</h3>
+            <p>Dịch vụ được cung cấp "nguyên trạng" (as-is). Chúng tôi không bảo đảm dịch vụ sẽ hoạt động liên tục,
+                không có lỗi, hoặc đáp ứng mọi yêu cầu cụ thể.</p>
+            <h3>Rủi ro từ bên thứ ba</h3>
+            <p>Chúng tôi không chịu trách nhiệm cho các thay đổi API, chính sách của Facebook hoặc Google có thể ảnh
+                hưởng đến chức năng dịch vụ.</p>
+            <h3>Giới hạn trách nhiệm</h3>
+            <p>VibeCodingSolution không chịu trách nhiệm cho bất kỳ thiệt hại trực tiếp, gián tiếp, ngẫu nhiên hoặc hậu
+                quả nào phát sinh từ việc sử dụng hoặc không thể sử dụng dịch vụ.</p>
+            <h3>Miễn trừ trách nhiệm cụ thể</h3>
+            <ul>
+                <li>Mất dữ liệu do lỗi hệ thống hoặc bên thứ ba</li>
+                <li>Gián đoạn dịch vụ ngoài tầm kiểm soát</li>
+                <li>Thiệt hại từ truy cập trái phép vào tài khoản</li>
+                <li>Hậu quả từ việc thay đổi điều khoản API bên thứ ba</li>
+            </ul>
+
+            <h2 id="lien-he">Liên hệ</h2>
+            <p>Nếu bạn có câu hỏi về điều khoản sử dụng này, vui lòng liên hệ:</p>
+            <div class="contact-card">
+                <p>Email: <a href="mailto:support@vibecodingsolution.ovh">support@vibecodingsolution.ovh</a></p>
+                <p>Điện thoại: <a href="tel:+84368419829">0368.419.829</a></p>
+                <p>Website: <a href="https://vibecodingsolution.ovh">vibecodingsolution.ovh</a></p>
+                <br>
+                <p><strong>Giờ hỗ trợ:</strong> Thứ 2 – Thứ 6: 9:00 – 18:00 (GMT+7)</p>
+                <p class="highlight">Cam kết phản hồi trong vòng 48 giờ làm việc.</p>
+            </div>
+
+            <footer class="page-footer">&copy; 2026 vibecodingsolution.ovh</footer>
+        </main>
+    </div>
+
+    <script>
+        const sections = document.querySelectorAll('h2[id]');
+        const tocLinks = document.querySelectorAll('.toc-list a');
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    tocLinks.forEach(a => a.classList.remove('active'));
+                    const active = document.querySelector(`.toc-list a[href="#${entry.target.id}"]`);
+                    if (active) active.classList.add('active');
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        sections.forEach(s => observer.observe(s));
+        if (tocLinks.length) tocLinks[0].classList.add('active');
+    </script>
+</body>
+
+</html>

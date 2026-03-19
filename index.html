@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Coding Solution — Giải pháp Công nghệ AI</title>
+    <meta name="description"
+        content="VibeCodingSolution cung cấp giải pháp tự động hoá, AI và phần mềm cho doanh nghiệp. Xây dựng bởi đam mê, tối ưu bằng công nghệ.">
+    <meta property="og:title" content="Vibe Coding Solution — Giải pháp Công nghệ AI">
+    <meta property="og:description" content="Giải pháp tự động hoá, API integration và phần mềm AI cho doanh nghiệp.">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/jpeg" href="/logo.jpg">
+    <link rel="apple-touch-icon" href="/logo.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ========================================
+           DESIGN TOKENS
+           ======================================== */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+            --max-w: 1120px;
+
+            --radius-sm: 10px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+
+            /* Dark-only palette */
+            --bg-primary: #050505;
+            --bg-secondary: #0a0a0a;
+            --bg-elevated: rgba(12, 12, 12, 0.85);
+            --surface: rgba(18, 18, 18, 0.7);
+            --surface-border: rgba(255, 255, 255, 0.08);
+            --surface-hover: rgba(255, 255, 255, 0.05);
+
+            --text-primary: #f0f0f0;
+            --text-secondary: rgba(240, 240, 240, 0.55);
+            --text-tertiary: rgba(240, 240, 240, 0.3);
+
+            --accent: #10b981;
+            --accent-muted: rgba(16, 185, 129, 0.15);
+            --accent-border: rgba(16, 185, 129, 0.3);
+            --accent-glow: rgba(16, 185, 129, 0.06);
+
+            --shadow-color: 0 0% 0%;
+            --shadow-sm: 0 1px 3px hsl(var(--shadow-color) / 0.4);
+            --shadow-md: 0 8px 24px hsl(var(--shadow-color) / 0.5);
+            --shadow-lg: 0 20px 50px -12px hsl(var(--shadow-color) / 0.6);
+
+            --noise-opacity: 0.035;
+            --glow-a: rgba(16, 185, 129, 0.08);
+            --glow-b: rgba(56, 189, 248, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-inner-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+            --toggle-bg: rgba(255, 255, 255, 0.06);
+            --toggle-border: rgba(255, 255, 255, 0.1);
+            --toggle-active-bg: rgba(16, 185, 129, 0.12);
+            --toggle-active-border: rgba(16, 185, 129, 0.4);
+        }
+
+        /* ========================================
+           BASE
+           ======================================== */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            transition: background 0.5s var(--ease-out-expo), color 0.5s var(--ease-out-expo);
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ========================================
+           GRAIN OVERLAY
+           ======================================== */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: var(--noise-opacity);
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 180px;
+        }
+
+        /* ========================================
+           AMBIENT BACKGROUND
+           ======================================== */
+        .ambient {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .ambient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: drift 18s ease-in-out infinite alternate;
+        }
+
+        .ambient-orb--a {
+            width: 500px;
+            height: 500px;
+            top: -15%;
+            left: -8%;
+            background: var(--glow-a);
+        }
+
+        .ambient-orb--b {
+            width: 400px;
+            height: 400px;
+            bottom: -10%;
+            right: -5%;
+            background: var(--glow-b);
+            animation-delay: -6s;
+            animation-duration: 22s;
+        }
+
+        @keyframes drift {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(30px, -20px) scale(1.08);
+            }
+        }
+
+        /* ========================================
+           CONTROLS (Top-Right)
+           ======================================== */
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 24px;
+            display: flex;
+            gap: 5px;
+            z-index: 100;
+        }
+
+        .ctrl-btn {
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: var(--toggle-bg);
+            border: 1px solid var(--toggle-border);
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+            font-weight: 600;
+            font-family: var(--font-mono);
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            transition: all 0.25s var(--ease-out-expo);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ctrl-btn svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+
+        .ctrl-btn:hover {
+            background: var(--surface-hover);
+            transform: translateY(-1px);
+        }
+
+        .ctrl-btn:active {
+            transform: scale(0.97);
+        }
+
+        .ctrl-btn.active {
+            background: var(--toggle-active-bg);
+            border-color: var(--toggle-active-border);
+            color: var(--accent);
+        }
+
+        /* ========================================
+           LAYOUT CONTAINER
+           ======================================== */
+        .page {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 100px 40px 60px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100dvh;
+        }
+
+        /* ========================================
+           HERO — LEFT-ALIGNED ASYMMETRIC
+           ======================================== */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+            margin-bottom: 72px;
+        }
+
+        .hero-content {
+            max-width: 520px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            background: var(--accent-muted);
+            border: 1px solid var(--accent-border);
+            color: var(--accent);
+            font-size: 0.68rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+            opacity: 0;
+            transform: translateY(12px);
+            animation: fadeSlideIn 0.6s var(--ease-out-expo) 0.2s forwards;
+        }
+
+        .hero-badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: breathe 2.5s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+
+            0%,
+            100% {
+                opacity: 1;
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+            }
+
+            50% {
+                opacity: 0.5;
+                box-shadow: 0 0 0 5px rgba(16, 185, 129, 0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.4rem, 5vw, 3.4rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.035em;
+            margin-bottom: 22px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeSlideIn 0.7s var(--ease-out-expo) 0.35s forwards;
+        }
+
+        .hero h1 .accent-word {
+            color: var(--accent);
+            position: relative;
+        }
+
+        .hero-sub {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+            max-width: 440px;
+            font-weight: 400;
+            opacity: 0;
+            transform: translateY(16px);
+            animation: fadeSlideIn 0.7s var(--ease-out-expo) 0.5s forwards;
+        }
+
+        /* Animated visual on right side */
+        .hero-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            opacity: 0;
+            transform: scale(0.92);
+            animation: fadeScaleIn 0.9s var(--ease-out-expo) 0.6s forwards;
+        }
+
+        .hero-visual-inner {
+            width: 320px;
+            height: 320px;
+            position: relative;
+        }
+
+        .hero-logo-wrap {
+            width: 110px;
+            height: 110px;
+            border-radius: 28px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: var(--glass-inner-shadow), var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+        }
+
+        .hero-logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .orbit-ring {
+            position: absolute;
+            border: 1px solid var(--surface-border);
+            border-radius: 50%;
+            animation: spin 25s linear infinite;
+        }
+
+        .orbit-ring--1 {
+            width: 200px;
+            height: 200px;
+            top: calc(50% - 100px);
+            left: calc(50% - 100px);
+            border-color: var(--accent-border);
+            opacity: 0.5;
+        }
+
+        .orbit-ring--2 {
+            width: 290px;
+            height: 290px;
+            top: calc(50% - 145px);
+            left: calc(50% - 145px);
+            animation-duration: 35s;
+            animation-direction: reverse;
+        }
+
+        .orbit-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            position: absolute;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+        }
+
+        .orbit-ring--1 .orbit-dot {
+            top: -4px;
+            left: 50%;
+            margin-left: -4px;
+        }
+
+        .orbit-ring--2 .orbit-dot {
+            top: calc(50% - 4px);
+            right: -4px;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fadeSlideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeScaleIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* ========================================
+           PRODUCTS SECTION
+           ======================================== */
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            opacity: 0;
+            transform: translateY(12px);
+            animation: fadeSlideIn 0.6s var(--ease-out-expo) 0.7s forwards;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 14px;
+            margin-bottom: 56px;
+        }
+
+        .product-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 20px;
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s var(--ease-out-expo);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: var(--glass-inner-shadow), var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+
+            /* Staggered entry */
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius-md);
+            opacity: 0;
+            transition: opacity 0.4s;
+            background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                    var(--accent-glow),
+                    transparent 60%);
+            pointer-events: none;
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+        }
+
+        .product-card:hover {
+            border-color: var(--accent-border);
+            transform: translateY(-3px);
+            box-shadow: var(--glass-inner-shadow), var(--shadow-md);
+        }
+
+        .product-card:active {
+            transform: scale(0.97);
+            transition-duration: 0.1s;
+        }
+
+        .product-card.disabled {
+            opacity: 0.45;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .product-card:nth-child(1) {
+            animation: fadeSlideIn 0.6s var(--ease-out-expo) 0.8s forwards;
+        }
+
+        .product-card:nth-child(2) {
+            animation: fadeSlideIn 0.6s var(--ease-out-expo) 0.9s forwards;
+        }
+
+        .product-card:nth-child(3) {
+            animation: fadeSlideIn 0.6s var(--ease-out-expo) 1.0s forwards;
+        }
+
+        .product-card:nth-child(4) {
+            animation: fadeSlideIn 0.6s var(--ease-out-expo) 1.1s forwards;
+        }
+
+        .product-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .product-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .product-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .product-name {
+            font-size: 0.88rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 3px;
+        }
+
+        .product-desc {
+            font-size: 0.74rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .product-status {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--text-tertiary);
+            margin-top: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ========================================
+           PILLS / TAGS
+           ======================================== */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 0;
+            opacity: 0;
+            transform: translateY(12px);
+            animation: fadeSlideIn 0.6s var(--ease-out-expo) 1.2s forwards;
+        }
+
+        .tag {
+            padding: 5px 14px;
+            border-radius: 20px;
+            background: var(--toggle-bg);
+            border: 1px solid var(--toggle-border);
+            color: var(--text-secondary);
+            font-size: 0.7rem;
+            font-weight: 500;
+            font-family: var(--font-sans);
+            letter-spacing: 0.02em;
+            transition: all 0.25s var(--ease-out-expo);
+        }
+
+        .tag:hover {
+            background: var(--accent-muted);
+            border-color: var(--accent-border);
+            color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+        footer {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 40px 24px;
+            font-size: 0.7rem;
+            font-family: var(--font-mono);
+            color: var(--text-tertiary);
+            letter-spacing: 0.3px;
+            border-top: 1px solid var(--surface-border);
+        }
+
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--accent);
+        }
+
+        /* ========================================
+           FOCUS RING (Accessibility)
+           ======================================== */
+        :focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        /* ========================================
+           TEXT SCRAMBLE EFFECT
+           ======================================== */
+        .scramble-text {
+            display: inline;
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 768px) {
+            .page {
+                padding: 90px 20px 40px;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                margin-bottom: 48px;
+            }
+
+            .hero-visual {
+                order: -1;
+                justify-content: flex-start;
+            }
+
+            .hero-visual-inner {
+                width: 220px;
+                height: 220px;
+            }
+
+            .hero-logo-wrap {
+                width: 80px;
+                height: 80px;
+                border-radius: 20px;
+                padding: 8px;
+            }
+
+            .hero-logo {
+                width: 56px;
+                height: 56px;
+            }
+
+            .orbit-ring--1 {
+                width: 140px;
+                height: 140px;
+                top: calc(50% - 70px);
+                left: calc(50% - 70px);
+            }
+
+            .orbit-ring--2 {
+                width: 200px;
+                height: 200px;
+                top: calc(50% - 100px);
+                left: calc(50% - 100px);
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .products {
+                grid-template-columns: 1fr;
+            }
+
+            .controls {
+                top: 12px;
+                right: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.7rem;
+            }
+
+            .hero-sub {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ambient" aria-hidden="true">
+        <div class="ambient-orb ambient-orb--a"></div>
+        <div class="ambient-orb ambient-orb--b"></div>
+    </div>
+
+    <nav class="controls" aria-label="Site controls">
+        <button class="ctrl-btn active" id="langVi" onclick="setLang('vi')">VI</button>
+        <button class="ctrl-btn" id="langEn" onclick="setLang('en')">EN</button>
+    </nav>
+
+    <main class="page">
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="hero-badge-dot"></span>
+                    <span data-vi="ĐANG PHÁT TRIỂN" data-en="IN DEVELOPMENT">ĐANG PHÁT TRIỂN</span>
+                </div>
+
+                <h1>
+                    <span data-vi="Giải pháp" data-en="Solutions built">Giải pháp</span><br>
+                    <span class="accent-word" id="heroAccent" data-vi="Công nghệ AI" data-en="with AI">Công nghệ
+                        AI</span><br>
+                    <span data-vi="cho Doanh nghiệp" data-en="for Business">cho Doanh nghiệp</span>
+                </h1>
+
+                <p class="hero-sub"
+                    data-vi="Xây dựng công cụ tự động hoá, kết nối API và giải pháp phần mềm — giúp doanh nghiệp vận hành hiệu quả hơn mỗi ngày."
+                    data-en="We build automation tools, API integrations, and software solutions — helping businesses operate more efficiently every day.">
+                    Xây dựng công cụ tự động hoá, kết nối API và giải pháp phần mềm — giúp doanh nghiệp vận hành hiệu
+                    quả hơn mỗi ngày.
+                </p>
+            </div>
+
+            <div class="hero-visual" aria-hidden="true">
+                <div class="hero-visual-inner">
+                    <div class="hero-logo-wrap">
+                        <svg class="hero-logo" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            role="img" aria-label="VibeCodingSolution Logo">
+                            <defs>
+                                <linearGradient id="logoGrad" x1="0" y1="0" x2="120" y2="120"
+                                    gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stop-color="#38bdf8" />
+                                    <stop offset="50%" stop-color="#6366f1" />
+                                    <stop offset="100%" stop-color="#a855f7" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Left code bracket < / > -->
+                            <path d="M32 38 L18 60 L32 82" stroke="url(#logoGrad)" stroke-width="5"
+                                stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                            <path d="M42 82 L52 38" stroke="url(#logoGrad)" stroke-width="4" stroke-linecap="round"
+                                fill="none" />
+                            <!-- Right code bracket < / > -->
+                            <path d="M88 38 L102 60 L88 82" stroke="url(#logoGrad)" stroke-width="5"
+                                stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                            <!-- AI neural / brain wave -->
+                            <path d="M36 52 C42 44, 50 44, 56 52 C62 60, 70 60, 76 52 C82 44, 88 48, 92 56"
+                                stroke="url(#logoGrad)" stroke-width="4.5" stroke-linecap="round" fill="none" />
+                            <!-- Cursor arrow -->
+                            <path d="M48 62 L44 78 L50 72 L56 78 L58 74 L52 68 L58 66 Z" fill="url(#logoGrad)"
+                                opacity="0.85" />
+                            <!-- Connection dots -->
+                            <circle cx="60" cy="30" r="3" fill="url(#logoGrad)" opacity="0.7" />
+                            <circle cx="75" cy="72" r="2.5" fill="url(#logoGrad)" opacity="0.5" />
+                            <circle cx="38" cy="90" r="2" fill="url(#logoGrad)" opacity="0.4" />
+                        </svg>
+                    </div>
+                    <div class="orbit-ring orbit-ring--1">
+                        <div class="orbit-dot"></div>
+                    </div>
+                    <div class="orbit-ring orbit-ring--2">
+                        <div class="orbit-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-label" data-vi="Sản phẩm" data-en="Products">Sản phẩm</div>
+
+        <div class="products">
+            <a href="https://adsflow.vibecodingsolution.ovh" class="product-card" id="card-adsflow">
+                <div class="product-icon" style="background: rgba(99, 102, 241, 0.12);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                    </svg>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">AdsFlow</div>
+                    <div class="product-desc" data-vi="Facebook Ads &rarr; Google Sheets"
+                        data-en="Facebook Ads &rarr; Google Sheets">Facebook Ads &rarr; Google Sheets</div>
+                    <div class="product-status" data-vi="Đang hoạt động" data-en="Live">Đang hoạt động</div>
+                </div>
+            </a>
+
+            <div class="product-card disabled" id="card-vibebanner">
+                <div class="product-icon" style="background: rgba(236, 72, 153, 0.1);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <polyline points="21 15 16 10 5 21" />
+                    </svg>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">VibeBanner</div>
+                    <div class="product-desc" data-vi="Tạo banner quảng cáo GDN" data-en="GDN banner creator">Tạo
+                        banner quảng cáo GDN</div>
+                    <div class="product-status" data-vi="Sắp ra mắt" data-en="Coming soon">Sắp ra mắt</div>
+                </div>
+            </div>
+
+            <div class="product-card disabled" id="card-datapipe">
+                <div class="product-icon" style="background: rgba(16, 185, 129, 0.1);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <line x1="18" y1="20" x2="18" y2="10" />
+                        <line x1="12" y1="20" x2="12" y2="4" />
+                        <line x1="6" y1="20" x2="6" y2="14" />
+                    </svg>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">DataPipe</div>
+                    <div class="product-desc" data-vi="Kết nối dữ liệu quảng cáo" data-en="Ad data pipeline">Kết nối dữ
+                        liệu quảng cáo</div>
+                    <div class="product-status" data-vi="Sắp ra mắt" data-en="Coming soon">Sắp ra mắt</div>
+                </div>
+            </div>
+
+            <div class="product-card disabled" id="card-upcoming">
+                <div class="product-icon" style="background: rgba(245, 158, 11, 0.1);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <rect x="4" y="4" width="16" height="16" rx="2" />
+                        <rect x="9" y="9" width="6" height="6" />
+                        <line x1="9" y1="1" x2="9" y2="4" />
+                        <line x1="15" y1="1" x2="15" y2="4" />
+                        <line x1="9" y1="20" x2="9" y2="23" />
+                        <line x1="15" y1="20" x2="15" y2="23" />
+                        <line x1="20" y1="9" x2="23" y2="9" />
+                        <line x1="20" y1="14" x2="23" y2="14" />
+                        <line x1="1" y1="9" x2="4" y2="9" />
+                        <line x1="1" y1="14" x2="4" y2="14" />
+                    </svg>
+                </div>
+                <div class="product-info">
+                    <div class="product-name" data-vi="Đang phát triển..." data-en="In development...">Đang phát
+                        triển...</div>
+                    <div class="product-desc" data-vi="Thêm công cụ AI mới" data-en="More AI tools coming">Thêm công cụ
+                        AI mới</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tags">
+            <span class="tag">AI Automation</span>
+            <span class="tag">Smart Workflows</span>
+            <span class="tag">API Integration</span>
+            <span class="tag">Ad Tech</span>
+            <span class="tag">SaaS</span>
+        </div>
+    </main>
+
+    <footer>
+        <span>&copy; 2026 vibecodingsolution.ovh</span>
+        <span style="margin: 0 6px; opacity: 0.4;">|</span>
+        <a href="/privacy.html">Privacy</a>
+        <span style="margin: 0 4px; opacity: 0.3;">&middot;</span>
+        <a href="/terms.html">Terms</a>
+    </footer>
+
+    <script>
+
+
+        /* ====== LANGUAGE SWITCH ====== */
+        function setLang(lang) {
+            document.querySelectorAll('[data-vi]').forEach(el => {
+                el.textContent = el.getAttribute('data-' + lang);
+            });
+            document.getElementById('langVi').classList.toggle('active', lang === 'vi');
+            document.getElementById('langEn').classList.toggle('active', lang === 'en');
+            localStorage.setItem('lang', lang);
+        }
+
+        /* ====== SPOTLIGHT BORDER EFFECT ====== */
+        document.querySelectorAll('.product-card:not(.disabled)').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+                card.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+            });
+        });
+
+        /* ====== TEXT SCRAMBLE EFFECT ====== */
+        class TextScramble {
+            constructor(el) {
+                this.el = el;
+                this.chars = 'abcdefghijklmnopqrstuvwxyz';
+                this.update = this.update.bind(this);
+            }
+            setText(newText) {
+                const oldText = this.el.textContent;
+                const length = Math.max(oldText.length, newText.length);
+                const promise = new Promise(resolve => this.resolve = resolve);
+                this.queue = [];
+                for (let i = 0; i < length; i++) {
+                    const from = oldText[i] || '';
+                    const to = newText[i] || '';
+                    const start = Math.floor(Math.random() * 20);
+                    const end = start + Math.floor(Math.random() * 20);
+                    this.queue.push({ from, to, start, end });
+                }
+                cancelAnimationFrame(this.frameRequest);
+                this.frame = 0;
+                this.update();
+                return promise;
+            }
+            update() {
+                let output = '';
+                let complete = 0;
+                for (let i = 0, n = this.queue.length; i < n; i++) {
+                    let { from, to, start, end, char } = this.queue[i];
+                    if (this.frame >= end) {
+                        complete++;
+                        output += to;
+                    } else if (this.frame >= start) {
+                        if (!char || Math.random() < 0.28) {
+                            char = this.chars[Math.floor(Math.random() * this.chars.length)];
+                            this.queue[i].char = char;
+                        }
+                        output += char;
+                    } else {
+                        output += from;
+                    }
+                }
+                this.el.textContent = output;
+                if (complete === this.queue.length) {
+                    this.resolve();
+                } else {
+                    this.frameRequest = requestAnimationFrame(this.update);
+                    this.frame++;
+                }
+            }
+        }
+
+        /* ====== INIT ====== */
+        document.addEventListener('DOMContentLoaded', () => {
+            // Restore language
+            const savedLang = localStorage.getItem('lang');
+            if (savedLang) setLang(savedLang);
+
+            // Text scramble on hero accent
+            const el = document.getElementById('heroAccent');
+            if (el) {
+                const scrambler = new TextScramble(el);
+                const finalText = el.textContent;
+                el.textContent = '';
+                setTimeout(() => {
+                    scrambler.setText(finalText);
+                }, 800);
+            }
+        });
+    </script>
+</body>
+
+</html>

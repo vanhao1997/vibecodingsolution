@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chính sách bảo mật — VibeCodingSolution</title>
+    <meta name="description"
+        content="Chính sách bảo mật của VibeCodingSolution — cách chúng tôi thu thập, sử dụng và bảo vệ dữ liệu của bạn.">
+    <link rel="icon" type="image/jpeg" href="/logo.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+            --bg-primary: #050505;
+            --surface: rgba(18, 18, 18, 0.7);
+            --surface-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f0f0f0;
+            --text-secondary: rgba(240, 240, 240, 0.55);
+            --text-tertiary: rgba(240, 240, 240, 0.3);
+            --accent: #10b981;
+            --accent-muted: rgba(16, 185, 129, 0.15);
+            --accent-border: rgba(16, 185, 129, 0.3);
+            --sidebar-w: 240px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Grain */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 180px;
+        }
+
+        /* ===== TWO-COLUMN LAYOUT ===== */
+        .page-layout {
+            display: flex;
+            max-width: 1100px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        /* ----- SIDEBAR ----- */
+        .sidebar {
+            width: var(--sidebar-w);
+            flex-shrink: 0;
+            padding: 36px 0 40px 28px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            scrollbar-width: none;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 28px;
+            font-size: 0.72rem;
+            font-family: var(--font-mono);
+            font-weight: 500;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            padding: 5px 12px;
+            border-radius: 16px;
+            border: 1px solid var(--accent-border);
+            background: var(--accent-muted);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            width: fit-content;
+        }
+
+        .back:hover {
+            transform: translateY(-1px);
+            background: rgba(16, 185, 129, 0.2);
+        }
+
+        .back:active {
+            transform: scale(0.97);
+        }
+
+        .back svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .sidebar-label {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            padding-left: 2px;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 2px;
+        }
+
+        .toc-list a {
+            display: block;
+            padding: 6px 12px;
+            font-size: 0.78rem;
+            font-weight: 450;
+            color: var(--text-tertiary);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+            line-height: 1.4;
+        }
+
+        .toc-list a:hover {
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .toc-list a.active {
+            color: var(--accent);
+            background: var(--accent-muted);
+            border-left-color: var(--accent);
+            font-weight: 550;
+        }
+
+        /* ----- MAIN CONTENT ----- */
+        .content {
+            flex: 1;
+            min-width: 0;
+            padding: 48px 40px 80px 48px;
+            border-left: 1px solid var(--surface-border);
+        }
+
+        h1 {
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.03em;
+            margin-bottom: 6px;
+            line-height: 1.15;
+        }
+
+        .update-date {
+            font-family: var(--font-mono);
+            color: var(--text-tertiary);
+            font-size: 0.72rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 48px 0 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--surface-border);
+            letter-spacing: -0.01em;
+            scroll-margin-top: 24px;
+        }
+
+        h2:first-of-type {
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 0.92rem;
+            font-weight: 600;
+            margin: 22px 0 8px;
+            color: var(--text-primary);
+            opacity: 0.85;
+        }
+
+        p {
+            margin-bottom: 14px;
+        }
+
+        ul,
+        ol {
+            margin-bottom: 14px;
+            padding-left: 22px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        strong {
+            color: var(--text-primary);
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-left: 3px solid var(--accent);
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin: 18px 0;
+            font-size: 0.86rem;
+            backdrop-filter: blur(8px);
+        }
+
+        .alert-warning {
+            border-left-color: #f59e0b;
+        }
+
+        .contact-card {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 14px;
+            padding: 24px;
+            margin-top: 20px;
+            backdrop-filter: blur(12px);
+        }
+
+        .contact-card p {
+            margin-bottom: 6px;
+        }
+
+        .contact-card .highlight {
+            color: var(--accent);
+            font-weight: 500;
+            margin-top: 10px;
+        }
+
+        .page-footer {
+            margin-top: 48px;
+            padding-top: 18px;
+            border-top: 1px solid var(--surface-border);
+            text-align: center;
+            font-family: var(--font-mono);
+            color: var(--text-tertiary);
+            font-size: 0.68rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== MOBILE: stacked layout ===== */
+        @media (max-width: 768px) {
+            .page-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: relative;
+                height: auto;
+                width: 100%;
+                padding: 24px 20px 0;
+                border-bottom: 1px solid var(--surface-border);
+            }
+
+            .toc-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+
+            .toc-list a {
+                padding: 4px 10px;
+                font-size: 0.72rem;
+                border-left: none;
+                border-radius: 14px;
+            }
+
+            .toc-list a.active {
+                border-left: none;
+            }
+
+            .content {
+                padding: 32px 20px 60px;
+                border-left: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <a href="/" class="back">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M19 12H5" />
+                    <polyline points="12 19 5 12 12 5" />
+                </svg>
+                Trang chủ
+            </a>
+
+            <div class="sidebar-label">Mục lục</div>
+            <ol class="toc-list">
+                <li><a href="#tong-quan">Tổng quan</a></li>
+                <li><a href="#thu-thap">Thu thập thông tin</a></li>
+                <li><a href="#su-dung">Sử dụng thông tin</a></li>
+                <li><a href="#chia-se">Chia sẻ thông tin</a></li>
+                <li><a href="#bao-mat">Bảo mật dữ liệu</a></li>
+                <li><a href="#luu-tru">Lưu trữ dữ liệu</a></li>
+                <li><a href="#cookie">Cookie & Tracking</a></li>
+                <li><a href="#quyen">Quyền người dùng</a></li>
+                <li><a href="#ben-thu-ba">Dịch vụ bên thứ ba</a></li>
+                <li><a href="#quoc-te">Chuyển giao quốc tế</a></li>
+                <li><a href="#tre-em">Quyền riêng tư trẻ em</a></li>
+                <li><a href="#thay-doi">Thay đổi chính sách</a></li>
+                <li><a href="#lien-he">Liên hệ</a></li>
+            </ol>
+        </aside>
+
+        <!-- CONTENT -->
+        <main class="content">
+            <h1>Chính sách bảo mật</h1>
+            <p class="update-date">Cập nhật lần cuối: 16/03/2026</p>
+
+            <h2 id="tong-quan">Tổng quan</h2>
+            <p>Chào mừng bạn đến với VibeCodingSolution. Chúng tôi hiểu rằng quyền riêng tư của bạn là vô cùng quan
+                trọng. Chính sách bảo mật này giải thích cách chúng tôi thu thập, sử dụng, lưu trữ và bảo vệ thông tin
+                cá nhân của bạn khi sử dụng các dịch vụ và sản phẩm của chúng tôi.</p>
+            <h3>Cam kết bảo mật</h3>
+            <p>Chúng tôi cam kết không bao giờ bán, cho thuê hoặc chia sẻ thông tin cá nhân của bạn với bên thứ ba vì
+                mục đích thương mại. Tất cả dữ liệu được mã hóa và xử lý theo tiêu chuẩn bảo mật cao nhất.</p>
+            <p>Bằng cách sử dụng dịch vụ của chúng tôi, bạn đồng ý với các điều khoản trong chính sách này. Nếu bạn
+                không đồng ý, vui lòng không sử dụng dịch vụ.</p>
+            <h3>Phạm vi áp dụng</h3>
+            <p>Chính sách này áp dụng cho tất cả dịch vụ do VibeCodingSolution cung cấp, bao gồm website, ứng dụng web
+                (AdsFlow, VibeBanner, DataPipe), API và các dịch vụ liên quan khác.</p>
+
+            <h2 id="thu-thap">Thu thập thông tin</h2>
+            <h3>Thông tin bạn cung cấp trực tiếp</h3>
+            <ul>
+                <li><strong>Thông tin tài khoản:</strong> Họ tên, email, số điện thoại khi đăng ký hoặc đăng nhập qua
+                    Google</li>
+                <li><strong>Thông tin hồ sơ:</strong> Ảnh đại diện, thông tin cá nhân bổ sung</li>
+                <li><strong>Nội dung do người dùng tạo:</strong> Cấu hình, dữ liệu báo cáo, tệp tải lên</li>
+                <li><strong>Phản hồi:</strong> Đánh giá, góp ý, yêu cầu hỗ trợ khách hàng</li>
+            </ul>
+            <h3>Thông tin tự động thu thập</h3>
+            <ul>
+                <li><strong>Dữ liệu kỹ thuật:</strong> Địa chỉ IP, loại thiết bị, hệ điều hành, trình duyệt</li>
+                <li><strong>Dữ liệu sử dụng:</strong> Thời gian truy cập, trang đã xem, tính năng đã sử dụng</li>
+                <li><strong>Cookie và công nghệ theo dõi:</strong> Để cải thiện trải nghiệm người dùng</li>
+                <li><strong>Dữ liệu hiệu suất:</strong> Tốc độ tải trang, lỗi ứng dụng, crash reports</li>
+            </ul>
+            <h3>Thông tin từ nguồn khác</h3>
+            <ul>
+                <li><strong>Mạng xã hội:</strong> Khi bạn đăng nhập qua Google, Facebook</li>
+                <li><strong>API bên thứ ba:</strong> Dữ liệu từ Facebook Ads API, Google Sheets API theo uỷ quyền của
+                    bạn</li>
+            </ul>
+            <div class="alert">
+                <strong>Lưu ý quan trọng:</strong> Chúng tôi chỉ thu thập thông tin cần thiết để cung cấp dịch vụ. Bạn
+                có thể từ chối cung cấp một số thông tin, nhưng điều này có thể ảnh hưởng đến trải nghiệm sử dụng.
+            </div>
+
+            <h2 id="su-dung">Sử dụng thông tin</h2>
+            <p>Chúng tôi sử dụng thông tin của bạn cho các mục đích sau:</p>
+            <h3>Cung cấp và vận hành dịch vụ</h3>
+            <ul>
+                <li>Tạo và quản lý tài khoản người dùng</li>
+                <li>Xử lý và thực hiện các kết nối OAuth (Google, Facebook)</li>
+                <li>Cung cấp tính năng và chức năng của dịch vụ</li>
+                <li>Đồng bộ hóa dữ liệu giữa các nền tảng (Facebook Ads ↔ Google Sheets)</li>
+                <li>Cung cấp hỗ trợ khách hàng và giải quyết vấn đề</li>
+            </ul>
+            <h3>Cải thiện và phát triển dịch vụ</h3>
+            <ul>
+                <li>Phân tích xu hướng sử dụng để tối ưu hóa sản phẩm</li>
+                <li>Phát triển tính năng mới dựa trên nhu cầu người dùng</li>
+                <li>Kiểm tra và đảm bảo chất lượng dịch vụ</li>
+                <li>Khắc phục lỗi và cải thiện hiệu suất</li>
+            </ul>
+            <h3>Bảo mật và an toàn</h3>
+            <ul>
+                <li>Phát hiện và ngăn chặn gian lận</li>
+                <li>Bảo vệ chống lại hoạt động độc hại</li>
+                <li>Xác minh danh tính người dùng</li>
+                <li>Tuân thủ các quy định pháp lý</li>
+            </ul>
+
+            <h2 id="chia-se">Chia sẻ thông tin</h2>
+            <p>Chúng tôi có thể chia sẻ thông tin của bạn trong các trường hợp sau:</p>
+            <h3>Với đối tác dịch vụ</h3>
+            <ul>
+                <li><strong>Dịch vụ cloud:</strong> Google Cloud để lưu trữ dữ liệu an toàn</li>
+                <li><strong>Dịch vụ CDN:</strong> Cloudflare để tối ưu tốc độ tải</li>
+                <li><strong>API nền tảng:</strong> Facebook API, Google API theo uỷ quyền của bạn</li>
+            </ul>
+            <div class="alert alert-warning">
+                <strong>Cam kết bảo mật với đối tác:</strong> Tất cả đối tác phải ký thỏa thuận bảo mật nghiêm ngặt
+                (DPA) và chỉ được sử dụng dữ liệu cho mục đích cung cấp dịch vụ cụ thể.
+            </div>
+            <h3>Yêu cầu pháp lý và tuân thủ</h3>
+            <ul>
+                <li>Tuân thủ lệnh tòa án hoặc quy trình pháp lý</li>
+                <li>Đáp ứng yêu cầu của cơ quan chính phủ có thẩm quyền</li>
+                <li>Thực thi các điều khoản sử dụng và chính sách</li>
+                <li>Bảo vệ quyền, tài sản và an toàn của chúng tôi và người dùng</li>
+            </ul>
+            <h3>Với sự đồng ý của bạn</h3>
+            <p>Chúng tôi có thể chia sẻ thông tin cho các mục đích khác khi có sự đồng ý rõ ràng của bạn.</p>
+
+            <h2 id="bao-mat">Bảo mật dữ liệu</h2>
+            <p>Chúng tôi áp dụng nhiều lớp bảo mật để bảo vệ thông tin của bạn:</p>
+            <h3>Bảo mật kỹ thuật</h3>
+            <ul>
+                <li><strong>Mã hóa SSL/TLS:</strong> Mọi dữ liệu truyền tải đều được mã hóa 256-bit</li>
+                <li><strong>Mã hóa dữ liệu:</strong> Thông tin nhạy cảm (token, credentials) được mã hóa khi lưu trữ
+                </li>
+                <li><strong>Xác thực JWT:</strong> Token-based authentication an toàn</li>
+                <li><strong>Giám sát:</strong> Theo dõi hoạt động bất thường và tấn công mạng</li>
+                <li><strong>HTTPS:</strong> Toàn bộ website sử dụng kết nối HTTPS an toàn</li>
+            </ul>
+            <h3>Bảo mật vật lý</h3>
+            <ul>
+                <li>Máy chủ đặt tại trung tâm dữ liệu có chứng nhận bảo mật</li>
+                <li>Hệ thống backup tự động với mã hóa</li>
+                <li>Kế hoạch khôi phục thảm họa (Disaster Recovery Plan)</li>
+            </ul>
+            <div class="alert">
+                <strong>Báo cáo sự cố bảo mật:</strong> Nếu phát hiện sự cố bảo mật, chúng tôi sẽ thông báo cho người
+                dùng bị ảnh hưởng trong vòng 48 giờ và thực hiện các biện pháp khắc phục ngay lập tức.
+            </div>
+
+            <h2 id="luu-tru">Lưu trữ dữ liệu</h2>
+            <h3>Thời gian lưu trữ</h3>
+            <ul>
+                <li><strong>Dữ liệu tài khoản:</strong> Cho đến khi bạn xóa tài khoản + 30 ngày</li>
+                <li><strong>Dữ liệu sử dụng:</strong> 2 năm cho mục đích phân tích</li>
+                <li><strong>Dữ liệu hỗ trợ:</strong> 3 năm sau lần tương tác cuối</li>
+                <li><strong>Log hệ thống:</strong> 1 năm cho mục đích bảo mật</li>
+            </ul>
+            <h3>Xóa dữ liệu</h3>
+            <p>Chúng tôi có hệ thống tự động xóa dữ liệu hết hạn. Khi xóa dữ liệu, chúng tôi sử dụng phương pháp xóa an
+                toàn (secure deletion) để đảm bảo dữ liệu không thể phục hồi.</p>
+
+            <h2 id="cookie">Cookie & Tracking</h2>
+            <h3>Các loại cookie chúng tôi sử dụng</h3>
+            <ul>
+                <li><strong>Cookie cần thiết:</strong> Để vận hành website và xác thực đăng nhập</li>
+                <li><strong>Cookie phân tích:</strong> Để hiểu cách bạn sử dụng dịch vụ</li>
+                <li><strong>Cookie chức năng:</strong> Để ghi nhớ tùy chọn và cài đặt</li>
+            </ul>
+            <h3>Quản lý cookie</h3>
+            <p>Bạn có thể quản lý cookie thông qua cài đặt trình duyệt. Việc tắt cookie có thể ảnh hưởng đến một số tính
+                năng của dịch vụ.</p>
+
+            <h2 id="quyen">Quyền người dùng</h2>
+            <p>Bạn có các quyền sau đối với dữ liệu cá nhân của mình:</p>
+            <h3>Quyền truy cập</h3>
+            <ul>
+                <li>Xem thông tin cá nhân chúng tôi đang lưu trữ</li>
+                <li>Tải xuống bản sao dữ liệu của bạn</li>
+                <li>Hiểu mục đích sử dụng dữ liệu</li>
+            </ul>
+            <h3>Quyền chỉnh sửa</h3>
+            <ul>
+                <li>Cập nhật thông tin cá nhân không chính xác</li>
+                <li>Bổ sung thông tin thiếu sót</li>
+                <li>Thay đổi tùy chọn quyền riêng tư</li>
+            </ul>
+            <h3>Quyền xóa</h3>
+            <ul>
+                <li>Xóa tài khoản và dữ liệu cá nhân</li>
+                <li>Yêu cầu xóa dữ liệu cụ thể</li>
+                <li>Rút lại sự đồng ý đã cấp</li>
+            </ul>
+            <h3>Quyền hạn chế xử lý</h3>
+            <ul>
+                <li>Tạm dừng xử lý dữ liệu trong một số trường hợp</li>
+                <li>Phản đối việc xử lý cho mục đích marketing</li>
+                <li>Hạn chế chia sẻ với bên thứ ba</li>
+            </ul>
+            <h3>Quyền di chuyển dữ liệu</h3>
+            <ul>
+                <li>Xuất dữ liệu định dạng có thể đọc được (JSON, CSV)</li>
+                <li>Chuyển dữ liệu sang nhà cung cấp khác</li>
+            </ul>
+            <div class="alert">
+                <strong>Thực hiện quyền của bạn:</strong> Liên hệ qua email <a
+                    href="mailto:support@vibecodingsolution.ovh">support@vibecodingsolution.ovh</a> hoặc <a
+                    href="tel:+84368419829">0368.419.829</a>. Phản hồi trong 30 ngày.
+            </div>
+            <h3>Quyền khiếu nại</h3>
+            <p>Nếu không hài lòng với cách chúng tôi xử lý dữ liệu, bạn có quyền khiếu nại với cơ quan bảo vệ dữ liệu có
+                thẩm quyền tại quốc gia của bạn.</p>
+
+            <h2 id="ben-thu-ba">Dịch vụ bên thứ ba</h2>
+            <h3>Tích hợp nền tảng</h3>
+            <ul>
+                <li><strong>Google:</strong> Đăng nhập OAuth, Google Sheets API để ghi dữ liệu báo cáo</li>
+                <li><strong>Facebook:</strong> Facebook Ads API để thu thập dữ liệu quảng cáo</li>
+                <li><strong>Cloudflare:</strong> CDN và bảo mật mạng</li>
+            </ul>
+            <p>Mỗi dịch vụ bên thứ ba có chính sách bảo mật riêng. Chúng tôi khuyến khích bạn đọc chính sách của họ.</p>
+
+            <h2 id="quoc-te">Chuyển giao quốc tế</h2>
+            <p>Dữ liệu của bạn có thể được lưu trữ và xử lý tại các máy chủ nằm ngoài quốc gia bạn. Chúng tôi đảm bảo
+                rằng mọi chuyển giao dữ liệu đều tuân thủ các quy định bảo vệ dữ liệu quốc tế.</p>
+
+            <h2 id="tre-em">Quyền riêng tư trẻ em</h2>
+            <p>Dịch vụ của chúng tôi không dành cho trẻ em dưới 16 tuổi. Chúng tôi không cố ý thu thập thông tin cá nhân
+                từ trẻ em. Nếu phát hiện tài khoản của trẻ em, chúng tôi sẽ xóa ngay lập tức.</p>
+
+            <h2 id="thay-doi">Thay đổi chính sách</h2>
+            <p>Chúng tôi có thể cập nhật chính sách này theo thời gian. Khi có thay đổi quan trọng:</p>
+            <ul>
+                <li>Thông báo qua email cho người dùng đã đăng ký</li>
+                <li>Hiển thị thông báo trên website</li>
+                <li>Cập nhật ngày "Cập nhật lần cuối" ở đầu trang</li>
+            </ul>
+
+            <h2 id="lien-he">Liên hệ</h2>
+            <p>Nếu bạn có câu hỏi về chính sách bảo mật này, vui lòng liên hệ:</p>
+            <div class="contact-card">
+                <p>Email: <a href="mailto:support@vibecodingsolution.ovh">support@vibecodingsolution.ovh</a></p>
+                <p>Điện thoại: <a href="tel:+84368419829">0368.419.829</a></p>
+                <p>Website: <a href="https://vibecodingsolution.ovh">vibecodingsolution.ovh</a></p>
+                <br>
+                <p><strong>Giờ hỗ trợ:</strong> Thứ 2 – Thứ 6: 9:00 – 18:00 (GMT+7)</p>
+                <p class="highlight">Cam kết phản hồi trong vòng 48 giờ làm việc.</p>
+            </div>
+
+            <footer class="page-footer">&copy; 2026 vibecodingsolution.ovh</footer>
+        </main>
+    </div>
+
+    <script>
+        // Active TOC tracking via IntersectionObserver
+        const sections = document.querySelectorAll('h2[id]');
+        const tocLinks = document.querySelectorAll('.toc-list a');
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    tocLinks.forEach(a => a.classList.remove('active'));
+                    const active = document.querySelector(`.toc-list a[href="#${entry.target.id}"]`);
+                    if (active) active.classList.add('active');
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        sections.forEach(s => observer.observe(s));
+
+        // Set first as active on load
+        if (tocLinks.length) tocLinks[0].classList.add('active');
+    </script>
+</body>
+
+</html>
