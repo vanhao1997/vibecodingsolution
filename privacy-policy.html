@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chính sách Quyền riêng tư — AI Hub Extension</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0f0f14;
+            color: #e0e0e0;
+            line-height: 1.7;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #888;
+            margin-bottom: 32px;
+            font-size: 14px;
+        }
+
+        h2 {
+            font-size: 18px;
+            color: #a8b4ff;
+            margin: 28px 0 12px;
+        }
+
+        p,
+        li {
+            font-size: 15px;
+            color: #ccc;
+            margin-bottom: 12px;
+        }
+
+        ul {
+            padding-left: 24px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background: #1a1a2e;
+            border-left: 3px solid #a8b4ff;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .footer {
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid #2a2a3a;
+            font-size: 13px;
+            color: #666;
+        }
+
+        a {
+            color: #a8b4ff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🔒 Chính sách Quyền riêng tư</h1>
+        <p class="subtitle">AI Hub — Chrome Extension | Cập nhật lần cuối: 27/03/2026</p>
+
+        <h2>1. Giới thiệu</h2>
+        <p><strong>AI Hub</strong> là tiện ích mở rộng (extension) cho trình duyệt Google Chrome, cho phép người dùng
+            truy cập nhanh các dịch vụ AI (ChatGPT, Gemini, DeepSeek, Grok) trực tiếp từ Chrome Sidepanel.</p>
+
+        <h2>2. Dữ liệu chúng tôi thu thập</h2>
+        <div class="highlight">
+            <p><strong>Chúng tôi KHÔNG thu thập bất kỳ dữ liệu cá nhân nào.</strong></p>
+        </div>
+        <p>AI Hub hoạt động hoàn toàn trên máy tính cá nhân (local) của người dùng. Tiện ích này:</p>
+        <ul>
+            <li>❌ <strong>Không</strong> thu thập thông tin cá nhân (tên, email, số điện thoại...)</li>
+            <li>❌ <strong>Không</strong> thu thập lịch sử duyệt web</li>
+            <li>❌ <strong>Không</strong> thu thập hoạt động của người dùng</li>
+            <li>❌ <strong>Không</strong> thu thập nội dung trang web</li>
+            <li>❌ <strong>Không</strong> thu thập nội dung cuộc hội thoại với AI</li>
+            <li>❌ <strong>Không</strong> theo dõi hay giám sát hành vi người dùng</li>
+        </ul>
+
+        <h2>3. Dữ liệu lưu trữ cục bộ (Local Storage)</h2>
+        <p>AI Hub chỉ lưu trữ các tùy chọn hiển thị (như chế độ Sáng/Tối) trên máy tính cá nhân của bạn thông qua
+            <code>chrome.storage.local</code>. Dữ liệu này:</p>
+        <ul>
+            <li>✅ Chỉ lưu trên máy tính cá nhân của bạn</li>
+            <li>✅ Không bao giờ được gửi đến bất kỳ máy chủ nào</li>
+            <li>✅ Bạn có thể xóa hoàn toàn bằng cách gỡ tiện ích</li>
+        </ul>
+
+        <h2>4. Quyền truy cập (Permissions)</h2>
+        <p>AI Hub sử dụng một số quyền của Chrome với mục đích rõ ràng:</p>
+        <ul>
+            <li><strong>sidePanel</strong>: Hiển thị giao diện tiện ích ở Sidepanel trình duyệt.</li>
+            <li><strong>tabs</strong>: Mở tab mới khi luồng đăng nhập AI bị chặn trong iframe.</li>
+            <li><strong>declarativeNetRequest</strong>: Xóa các header bảo mật (X-Frame-Options, CSP) để nhúng giao diện
+                web của các AI vào Sidepanel.</li>
+            <li><strong>storage</strong>: Lưu cài đặt giao diện cục bộ.</li>
+        </ul>
+
+        <h2>5. Chia sẻ dữ liệu với bên thứ ba</h2>
+        <div class="highlight">
+            <p><strong>Chúng tôi KHÔNG bán, chuyển nhượng hoặc chia sẻ dữ liệu với bất kỳ bên thứ ba nào.</strong></p>
+        </div>
+        <p>Mọi tương tác giữa bạn và các dịch vụ AI (ChatGPT, Gemini, v.v.) diễn ra trực tiếp giữa trình duyệt của bạn
+            và máy chủ của nhà cung cấp AI đó. AI Hub chỉ đóng vai trò hiển thị giao diện (iframe), không can thiệp hay
+            đứng giữa.</p>
+
+        <h2>6. Bảo mật</h2>
+        <p>AI Hub không truyền tải dữ liệu qua internet, do đó không có rủi ro rò rỉ dữ liệu từ phía tiện ích. Bảo mật
+            đăng nhập các dịch vụ AI phụ thuộc vào chính sách bảo mật của từng nhà cung cấp (OpenAI, Google, xAI,
+            DeepSeek).</p>
+
+        <h2>7. Thay đổi chính sách</h2>
+        <p>Chúng tôi có thể cập nhật chính sách này theo thời gian. Mọi thay đổi sẽ được công bố tại trang này.</p>
+
+        <h2>8. Liên hệ</h2>
+        <p>Nếu bạn có câu hỏi về chính sách quyền riêng tư, vui lòng liên hệ:</p>
+        <ul>
+            <li>👤 <strong>Nguyễn Văn Hảo</strong></li>
+            <li>🌐 <a href="https://nguyenvanhao.name.vn">nguyenvanhao.name.vn</a></li>
+            <li>📧 GitHub: <a href="https://github.com/vanhao1997">@vanhao1997</a></li>
+        </ul>
+
+        <div class="footer">
+            <p>© 2026 AI Hub Extension. Được phát triển bởi Nguyễn Văn Hảo.</p>
+        </div>
+    </div>
+</body>
+
+</html>
